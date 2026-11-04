@@ -2,69 +2,69 @@
 
 # J.R.R. Tolkien · The Reading Shelf
 
-**Una estantería infinita en 3D con toda la obra de J.R.R. Tolkien, en cintas VHS gastadas o en tapas duras con dorado.**
+**An endless 3D shelf of every J.R.R. Tolkien work, as worn rental VHS tapes or gilt hardbacks.**
 
 ![React](https://img.shields.io/badge/React-18-1F3FB0?style=flat-square&logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-1F3FB0?style=flat-square&logo=typescript&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-1F3FB0?style=flat-square&logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-6-1F3FB0?style=flat-square&logo=vite&logoColor=white)
-![Obras](https://img.shields.io/badge/obras-51-D2452B?style=flat-square)
-![Dependencias runtime](https://img.shields.io/badge/deps_runtime-solo_React-141414?style=flat-square)
+![Works](https://img.shields.io/badge/works-51-D2452B?style=flat-square)
+![Runtime deps](https://img.shields.io/badge/runtime_deps-React_only-141414?style=flat-square)
 
-![La estantería en formato VHS](docs/screenshots/shelf-vhs.jpg)
+![The shelf in VHS format](docs/screenshots/shelf-vhs.jpg)
 
 </div>
 
 ---
 
-## Qué es
+## What it is
 
-Una hoja de papel cálido atravesada por una estantería sin fin: **51 obras de Tolkien**, desde *A Middle English Vocabulary* (1922) hasta *The Collected Poems* (2024). La obra activa sale de la estantería y **gira en 3D** para enseñarte la portada, ligeramente inclinada, elevada y echando sombra sobre el papel.
+A long shelf runs across a sheet of warm paper, holding **51 works by Tolkien**, from *A Middle English Vocabulary* (1922) to *The Collected Poems* (2024). The active work is pulled out and **turned in 3D** to show its cover. It sits tilted a few degrees, lifted slightly, and casts a shadow on the paper.
 
-Puedes moverte con clic, flechas, las pestañas de década, la rueda del ratón, arrastrando o con el teclado. Al abrir una obra, **una hoja de papel crece desde la portada** hasta llenar la pantalla, y el póster aparece en **manchas de tinta** que se extienden.
+You can move along the shelf by clicking a spine, using the arrows or a decade tab, scrolling, dragging or pressing the keyboard arrows. When you open a work, **a sheet of paper grows out of the cover** to fill the screen, and the poster appears in **spreading blots of ink**.
 
-> No hay ni un solo fundido de opacidad: todo aparece con máscaras, recortes o escalados.
+> Nothing ever fades in or out: every reveal is a mask, a clip or a scale.
 
-## Dos formatos, una estantería
+## Two formats, one shelf
 
-| VHS de videoclub | Tapa dura |
+| Rental VHS | Hardback |
 |:---:|:---:|
-| ![VHS](docs/screenshots/cover-open-cursor.jpg) | ![Libros](docs/screenshots/shelf-book.jpg) |
-| Fundas de cartón con bordes rozados, pliegues, brillo del plástico, número de catálogo y pegatina de *Bree Video*. | Tela con dorado o sobrecubierta impresa, lomo redondeado, cabezada, bisagra y esquinas gastadas. |
+| ![VHS](docs/screenshots/cover-open-cursor.jpg) | ![Books](docs/screenshots/shelf-book.jpg) |
+| Cardboard sleeves with rubbed edges, creases, a plastic sheen, catalogue numbers and a *Bree Video* rental sticker. | Gilt cloth or printed dust jackets, with rounded spines, headbands, hinges and bumped corners. |
 
-El selector **VHS / Libro** interpola las proporciones de la caja 3D en tiempo real: los lomos se estrechan y las portadas se ensanchan sin cortes.
+The **VHS / Book** switch tweens the proportions of the 3D box live: the spines get narrower and the covers wider, with no jump.
 
-## Abrir una obra
+## Opening a work
 
-| 1. La hoja crece desde la portada | 2. El póster aparece en tinta |
+| 1. The sheet grows out of the cover | 2. The poster bleeds in |
 |:---:|:---:|
-| ![Hoja creciendo](docs/screenshots/sheet-growing.jpg) | ![Tinta](docs/screenshots/ink-bleed.jpg) |
+| ![Sheet growing](docs/screenshots/sheet-growing.jpg) | ![Ink bleed](docs/screenshots/ink-bleed.jpg) |
 
-| 3. Detalle en VHS | 3. Detalle en libro |
+| 3. Detail, VHS | 3. Detail, book |
 |:---:|:---:|
-| ![Detalle VHS](docs/screenshots/detail-vhs.jpg) | ![Detalle libro](docs/screenshots/detail-book.jpg) |
+| ![VHS detail](docs/screenshots/detail-vhs.jpg) | ![Book detail](docs/screenshots/detail-book.jpg) |
 
-La hoja pasa del recorte y la inclinación de la portada a pantalla completa. Cada línea de texto sube desde su propia máscara, y el póster se revela con siete manchas deformadas con `feTurbulence` + `feDisplacementMap`.
+The sheet starts as the cover's clipped, tilted rectangle and straightens out to full screen. Each line of text rises out of its own mask. The poster shows through seven circles whose edges are roughened with `feTurbulence` and `feDisplacementMap`.
 
-## En el móvil
+## On mobile
 
 <p align="center">
-  <img src="docs/screenshots/mobile-shelf.jpg" width="300" alt="Estantería en móvil" />
+  <img src="docs/screenshots/mobile-shelf.jpg" width="300" alt="Shelf on mobile" />
   &nbsp;&nbsp;
-  <img src="docs/screenshots/mobile-detail.jpg" width="300" alt="Detalle en móvil" />
+  <img src="docs/screenshots/mobile-detail.jpg" width="300" alt="Detail on mobile" />
 </p>
 
-Toda la geometría sale de una sola variable, `--H`. La estantería se arrastra con el dedo, las pestañas se desplazan en horizontal y el detalle pasa a una columna que hace scroll.
+All the geometry scales from a single CSS variable, `--H`. You can drag the shelf with a finger, the decade tabs scroll sideways, and the detail page becomes a single scrolling column.
 
-## Detalles
+## Details
 
-- **Cursor propio:** un anillo que se encoge sobre los lomos y se convierte en un disco cobalto con "OPEN / ABRIR" sobre la portada, que se inclina hacia él.
-- **Inercia de muelle:** saltar varias obras atraviesa todas las intermedias, que se abren a medias al pasar. El pie de foto va mostrando cada título por su máscara.
-- **Pestañas de década:** el bloque cobalto se desliza y se estira hasta la década de la obra activa.
-- **Grano de papel:** una capa de ruido en `multiply` sobre toda la página, que también tiñe las cintas.
-- **Accesibilidad:** botones reales, `aria-live` en el pie de foto, diálogo modal y soporte de `prefers-reduced-motion`, que vuelve instantáneos todos los movimientos.
+- **Custom cursor:** a ring that shrinks over spines. Over the cover it becomes a cobalt "OPEN" disc, and the cover leans towards it.
+- **Spring physics:** a jump of several works glides through every work in between, and each one half-opens as it passes. The caption shows every title in turn through its mask.
+- **Decade tabs:** a cobalt block slides and stretches to the decade of the active work.
+- **Paper grain:** a noise layer blended with `multiply` covers the whole page, tapes included.
+- **Accessibility:** controls are real buttons, the caption uses `aria-live`, the detail is a modal dialog, and with `prefers-reduced-motion` every movement happens instantly.
 
-## Arrancar en local
+## Run it locally
 
 ```bash
 git clone https://github.com/utity-tools/tolkien-library.git
@@ -73,46 +73,46 @@ npm install
 npm run dev     # → http://localhost:5173
 ```
 
-| Comando | Qué hace |
+| Command | What it does |
 |---|---|
-| `npm run dev` | Servidor de desarrollo con recarga en caliente |
-| `npm run build` | Comprobación de tipos + build de producción en `dist/` |
-| `npm run preview` | Sirve el build de producción |
-| `npm run typecheck` | Solo TypeScript |
+| `npm run dev` | Dev server with hot reload |
+| `npm run build` | Type-checks, then builds for production into `dist/` |
+| `npm run preview` | Serves the production build |
+| `npm run typecheck` | Runs TypeScript only |
 
-Requiere Node 18 o superior.
+You need Node 18 or later.
 
-### Controles
+### Controls
 
-| Entrada | Acción |
+| Input | Action |
 |---|---|
-| Clic en un lomo | Desliza la estantería hasta esa obra |
-| Clic en la portada · <kbd>Enter</kbd> · ▶ | Abre el detalle |
-| <kbd>←</kbd> <kbd>→</kbd> · flechas en pantalla | Obra anterior / siguiente |
-| Rueda · arrastrar | Recorre la estantería y la ajusta a la obra más cercana |
-| Pestañas de década | Salta a la primera obra de esa década por el camino más corto |
-| <kbd>Esc</kbd> · Cerrar | Devuelve la hoja a la portada |
+| Click a spine | Glides the shelf to that work |
+| Click the cover · <kbd>Enter</kbd> · ▶ | Opens the detail page |
+| <kbd>←</kbd> <kbd>→</kbd> · on-screen arrows | Previous / next work |
+| Wheel · drag | Scrubs the shelf, then settles on the nearest work |
+| Decade tabs | Jumps to the decade's first work by the shortest way round |
+| <kbd>Esc</kbd> · Close | Folds the sheet back into the cover |
 
-## Cómo está hecho
+## How it's built
 
 ```
 src/
-├─ engine/ShelfEngine.ts   bucle rAF único: muelle, giro, inclinación, cursor, entradas
-├─ data/works.ts           las 51 obras (títulos EN/ES, año, género, editor, sinopsis)
-├─ data/sheets.ts          imágenes reales opcionales + cajas de recorte
-├─ art/                    arte SVG generado: vhs.ts, book.ts, motifs.ts, wear.ts
-├─ lib/                    formatos, matemáticas, curvas de movimiento
+├─ engine/ShelfEngine.ts   one rAF loop: spring, turning, tilt, cursor, every input
+├─ data/works.ts           all 51 works (EN/ES titles, year, genre, editor, synopsis)
+├─ data/sheets.ts          optional real artwork sheets + crop boxes
+├─ art/                    generated SVG art: vhs.ts, book.ts, motifs.ts, wear.ts
+├─ lib/                    formats, math, motion curves
 ├─ hooks/                  useShelfEngine, useMaskSwap, useLatest
 └─ components/             TopBar, Segmented, Shelf, Caption, DetailSheet, InkPoster…
 ```
 
-**Rendimiento:** React pinta la estructura una vez. Un solo `requestAnimationFrame` mueve cada cinta escribiendo `transform` en el DOM, así que no hay re-renders por frame. Las cintas fuera de pantalla se ocultan y no se pintan. El arte SVG se genera una sola vez por cara y formato y se guarda en caché como data URL.
+**Performance:** React renders the structure once. A single `requestAnimationFrame` loop moves every tape by writing `transform` straight to the DOM, so React never re-renders per frame. Tapes that are off-screen are hidden and never painted. The SVG art is generated once per face and format, then cached as a data URL.
 
-**Matemáticas de la estantería:** la posición de cada cinta es `x = r·(ws+gap) + (d−ws+1.6·gap)·B(r)`. `B` es un escalón suave y continuo, así que la portada abierta separa a sus vecinas sin saltos. La apertura es `smoothstep(1−|r|)` y de ella salen la rotación, la elevación, el empuje hacia el espectador y el sombreado.
+**Shelf math:** a tape at relative index `r` sits at `x = r·(ws+gap) + (d−ws+1.6·gap)·B(r)`. `B` is a smooth, continuous step, so the open cover pushes its neighbours apart without any jump. Openness is `smoothstep(1−|r|)`, and the rotation, lift, push towards the viewer and shading are all derived from it.
 
-## Usar ilustraciones propias
+## Bring your own artwork
 
-El arte generado sirve de base. Para cambiarlo por imágenes reales, declara una hoja y las cajas de recorte en `src/data/sheets.ts`:
+The generated art is only a fallback. To use real images, declare a sheet and its crop boxes in `src/data/sheets.ts`:
 
 ```ts
 export const SHEET = {
@@ -125,10 +125,10 @@ export const CROP = {
 };
 ```
 
-Las claves siguen el formato `<vhs|book>-<spine|cover>-<idDeObra>`. Cada recorte se estira exactamente sobre su cara, el póster del detalle usa el mismo recorte, y las caras sin entrada en `CROP` siguen usando el arte generado.
+Keys follow the pattern `<vhs|book>-<spine|cover>-<workId>`. Each crop is stretched exactly over its face, and the detail poster uses the same crop. Any face without a `CROP` entry keeps its generated art.
 
 ---
 
 <div align="center">
-<sub>Proyecto de fans, sin relación con la Tolkien Estate. Todas las ilustraciones son originales y se generan por código.</sub>
+<sub>A fan project, not affiliated with the Tolkien Estate. All artwork is original and generated in code.</sub>
 </div>
