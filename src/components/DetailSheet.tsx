@@ -14,6 +14,8 @@ const RISE_MS = 900;
 const RISE_DELAY = 620;
 const RISE_STAGGER = 75;
 const INK_DELAY = 520;
+/** Below the mask, including its accent padding. */
+const HIDDEN = '130%';
 
 export interface DetailHandle {
   open(index: number, format: Format, from: DOMRect | null): void;
@@ -66,7 +68,7 @@ export const DetailSheet = forwardRef<DetailHandle, Props>(({ onClose }, ref) =>
         { duration: ms(OPEN_MS), easing: SHEET_EASE, fill: 'both' },
       );
       el.querySelectorAll<HTMLElement>('[data-rise]').forEach((line, i) =>
-        line.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], {
+        line.animate([{ transform: `translateY(${HIDDEN})` }, { transform: 'translateY(0)' }], {
           duration: ms(RISE_MS),
           delay: delay(RISE_DELAY + i * RISE_STAGGER),
           easing: EASE,

@@ -250,6 +250,8 @@ export class ShelfEngine {
     if (e.key === 'ArrowLeft') this.step(-1);
     else if (e.key === 'ArrowRight') this.step(1);
     else if (e.key === 'Enter' && (document.activeElement === document.body || document.activeElement === null)) {
+      // Focus moves to the Close button on open; without this the same Enter would press it.
+      e.preventDefault();
       this.events.onOpenRequest();
     }
   };

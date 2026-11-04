@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, type RefObject } from 'react';
 import { EASE, prefersReducedMotion } from '../lib/motion';
 
 const SWAP_MS = 650;
+/** Travel distance: clears the mask including its accent padding. */
+const OFF = 130;
 
 const span = (text: string): HTMLSpanElement => {
   const el = document.createElement('span');
@@ -35,11 +37,11 @@ export const useMaskSwap = (ref: RefObject<HTMLElement | null>, text: string, di
       const from = getComputedStyle(old).transform;
       old.getAnimations().forEach((a) => a.cancel());
       old
-        .animate([{ transform: from === 'none' ? 'translateY(0)' : from }, { transform: `translateY(${-dir * 105}%)` }], timing)
+        .animate([{ transform: from === 'none' ? 'translateY(0)' : from }, { transform: `translateY(${-dir * OFF}%)` }], timing)
         .finished.then(() => old.remove(), () => old.remove());
     }
     const next = span(text);
     mask.append(next);
-    next.animate([{ transform: `translateY(${dir * 105}%)` }, { transform: 'translateY(0)' }], timing);
+    next.animate([{ transform: `translateY(${dir * OFF}%)` }, { transform: 'translateY(0)' }], timing);
   }, [ref, text, dir]);
 };
