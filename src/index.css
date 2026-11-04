@@ -1,0 +1,246 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/inter-tight/wght.css';
+
+@theme {
+  --color-paper: #edebe6;
+  --color-sheet: #f4f2ed;
+  --color-ink: #141414;
+  --color-muted: #6d6a63;
+  --color-cobalt: #1f3fb0;
+  --color-rule: rgba(20, 20, 20, 0.9);
+  --font-sans: 'Inter Tight Variable', system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', Georgia, serif;
+  --ease-paper: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root {
+  /* Tape height: every piece of shelf geometry scales from it. */
+  --H: min(46vh, 31vw);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: light;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --H: min(60vw, 40svh);
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (pointer: fine) {
+  html,
+  body,
+  button,
+  a {
+    cursor: none;
+  }
+}
+
+/* ───────────── label system ───────────── */
+
+@utility lbl {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 10.5px;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  @media (max-width: 767px) {
+    font-size: 9px;
+  }
+}
+
+@utility box {
+  display: inline-flex;
+  align-items: center;
+  height: 21px;
+  padding: 0 8px;
+  border: 1px solid var(--color-rule);
+}
+
+/* Overflow mask: every text reveal is a slide through one of these. */
+@utility mask {
+  display: grid;
+  overflow: hidden;
+  /* Room for accents and descenders that a line-height of 1 would clip. */
+  padding-block: 0.16em;
+  margin-block: -0.16em;
+  & > * {
+    grid-area: 1 / 1;
+  }
+}
+
+/* ───────────── paper grain ───────────── */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .42  0 0 0 0 .38  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ───────────── 3D shelf ───────────── */
+
+.stage,
+.tape {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.stage {
+  left: 50%;
+  top: 50%;
+}
+
+.tape {
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  top: calc(var(--H) / -2);
+  height: var(--H);
+  border-radius: 2px;
+  backface-visibility: hidden;
+  background-repeat: no-repeat;
+}
+
+/* Light falling across the turning box. */
+.face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #000;
+  opacity: var(--shade, 0);
+  pointer-events: none;
+}
+
+.face-spine {
+  left: calc(var(--ws) / -2);
+  width: var(--ws);
+  transform: translateZ(calc(var(--d) / 2));
+}
+
+.face-cover {
+  left: calc(var(--d) / -2);
+  width: var(--d);
+  transform: rotateY(90deg) translateZ(calc(var(--ws) / 2));
+  box-shadow: 0 30px 60px -28px rgba(20, 16, 10, 0.55);
+}
+
+/* ───────────── custom cursor ───────────── */
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  pointer-events: none;
+  display: none;
+}
+
+@media (pointer: fine) {
+  .cursor {
+    display: block;
+  }
+}
+
+.cursor-ring,
+.cursor-dot,
+.cursor-label {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cursor-ring {
+  inset: 0;
+  border: 1.5px solid var(--color-ink);
+  transition:
+    transform 0.5s var(--ease),
+    background-color 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.cursor-dot {
+  left: 26px;
+  top: 26px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-ink);
+  transition: transform 0.4s var(--ease);
+}
+
+.cursor-label {
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: #fff;
+  font: 600 10px/1.25 var(--font-sans);
+  letter-spacing: 0.1em;
+  transform: scale(0);
+  transition: transform 0.45s var(--ease);
+}
+
+.cursor[data-state='spine'] .cursor-ring {
+  transform: scale(0.72);
+}
+
+.cursor[data-state='btn'] .cursor-ring {
+  transform: scale(0.55);
+}
+
+.cursor[data-state='btn'] .cursor-dot,
+.cursor[data-state='open'] .cursor-dot {
+  transform: scale(0);
+}
+
+.cursor[data-state='open'] .cursor-ring {
+  transform: scale(1.75);
+  background: var(--color-cobalt);
+  border-color: var(--color-cobalt);
+}
+
+.cursor[data-state='open'] .cursor-label {
+  transform: scale(1);
+}
+
+/* ───────────── detail sheet ───────────── */
+
+.detail {
+  visibility: hidden;
+}
+
+.detail[data-open='true'] {
+  visibility: visible;
+}
